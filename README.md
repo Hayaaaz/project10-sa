@@ -1,9 +1,9 @@
-#Project 10 — Attacker and Defender
+# Project 10 — Attacker and Defender
 ---
 
 This repository contains my work for Project 10 in System Administration and Maintenance. The project simulates a multi‑stage attack against the ministry and the defensive workflow used to detect and triage it.
 
-##Contents
+## Contents
 ---
 
 **attack/scenario.txt**: Full attacker kill chain, including the auth.log intrusion and an indirect prompt injection (LLM01).
@@ -18,12 +18,12 @@ This repository contains my work for Project 10 in System Administration and Mai
 
 **agent-log.txt**: Log of local sandbox model usage.
 
-##Running the Detector
+## Running the Detector
 -
 
 ***python3 defender/detect.py code/auth.log***
 
-##Summary
+## Summary
 ---
 
 This project shows how an attacker chains multiple steps together and how rule‑based detection identifies the full intrusion. It also compares deterministic detection with AI‑assisted triage and highlights the risks of indirect prompt injection (LLM01) in RAG systems.
