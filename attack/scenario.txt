@@ -1,17 +1,32 @@
-Reconnaissance — Attacker identifies ministry staff and selects the finance volunteer as a target. Notes that the ministry uses a help‑desk AI assistant and internal RAG documents.
+attack/scenario.txt
+Project 10 — Multi‑Stage Attack Scenario
 
-Delivery — Attacker sends a phishing lure to the finance volunteer using a professional‑looking email requesting urgent review of donor disbursement data.
+1. Recon
+Attacker profiles finance volunteers and learns communication patterns.
 
-Exploitation — Volunteer enters credentials into the attacker’s fake login page. Attacker uses stolen jvargas credentials to authenticate from Romania (non‑home geo).
+2. Delivery
+Attacker sends a phishing email and a deepfake video call to the volunteer.
 
-Installation — Attacker escalates privileges on app1 using sudo without a change ticket, establishing a foothold.
+3. Credential Harvest
+Volunteer enters credentials into a fake login portal created by the attacker.
 
-Lateral Movement — Attacker SSHes into db1 using the compromised jvargas account.
+4. Exploitation
+Attacker uses stolen credentials from Romania (impossible‑travel login).
 
-Collection — Attacker performs multiple SELECT queries against the donor table in db1, harvesting sensitive donor information.
+5. Privilege Escalation
+Attacker performs sudo without a change ticket.
 
-Weaponization (AI) — Attacker plants a poisoned RAG document containing hidden indirect prompt‑injection instructions designed to manipulate the ministry’s help‑desk AI assistant.
+6. Lateral Movement
+Attacker SSHes into db1 from an international IP.
 
-Command & Control — Help‑desk assistant ingests the poisoned RAG content. Hidden instructions cause the AI to fetch donor data and prepare it for exfiltration.
+7. Collection
+Attacker performs bulk donor‑table SELECT operations.
 
-Exfiltration — Attacker exfiltrates donor data via a Markdown image link pointing to an attacker‑controlled external IP (203.0.113.x).
+8. Exfiltration
+Attacker curls data to an external attacker‑controlled IP.
+
+9. Indirect Prompt Injection
+Attacker plants a poisoned RAG document modeled on rag_notes.txt.
+
+10. AI Abuse
+Help‑desk assistant retrieves the poisoned document and executes the injected instruction.
