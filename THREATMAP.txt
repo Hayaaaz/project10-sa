@@ -1,0 +1,25 @@
+ATTACKER ACTION → DEFENDER SIGNAL
+
+Phishing lure delivered
+→ No signal (email not monitored by auth.log)
+
+Stolen credentials used from Romania
+→ Rule: successful login from non-home geo
+
+Impossible travel (RO → INT)
+→ New Rule: impossible travel
+
+Privilege escalation without ticket
+→ Rule: sudo without a change ticket
+
+SSH to db1
+→ Rule: successful login from non-home geo (INT)
+
+Bulk donor-table SELECTs
+→ New Rule: bulk donor-table read
+
+Exfiltration to attacker IP
+→ Rule: possible data exfiltration to attacker IP
+
+Poisoned RAG document triggers AI
+→ No signal (outside auth.log scope)

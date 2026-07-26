@@ -1,0 +1,56 @@
+[Task]
+Asked an AI to help brainstorm clearer wording for a phishing-style email used in the assignment.
+
+[Model]
+copilot
+
+[Output]
+Suggested more professional phrasing.
+
+[My edits]
+I changed names, context, and details myself.
+
+
+---
+
+[Task]
+Asked an AI to explain the concept of “impossible travel” in security logs.
+
+[Model]
+copilot
+
+[Output]
+Gave a short definition of the idea.
+
+[My edits]
+I wrote my own detection rule based on the explanation.
+
+
+---
+
+[Task]
+Asked an AI to help outline what typically goes into an incident scenario description.
+
+[Model]
+copilot
+
+[Output]
+Provided a general structure.
+
+[My edits]
+I wrote the actual scenario using my own attack steps.
+
+
+---
+
+[Task]
+Asked an AI to help tidy the wording in one section of my REPORT.txt.
+
+[Model]
+copilot
+
+[Output]
+Suggested clearer phrasing for a few sentences.
+
+[My edits]
+I rewrote the final version myself to match my own writing style.

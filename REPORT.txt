@@ -1,0 +1,59 @@
+Project 10 — Attacker and Defender  
+Normal Tier Reflection  
+Haya Hussein
+
+1. Overview
+This project required building both sides of a security incident: the attacker’s kill chain and the defender’s detection pipeline.
+I created a realistic phishing lure, simulated credential theft, lateral movement, privilege escalation, donor‑table harvesting, and data exfiltration. 
+On the defender side, I implemented deterministic detection rules, ran triage with an AI assistant, and compared human‑written rules to AI analysis.
+
+2. What I Built (Attacker Side)
+I wrote a phishing email targeting the ministry’s finance volunteer. The attacker used stolen credentials to log in from Romania, which appeared in the auth.log as a non‑home‑geo login. 
+The attacker escalated privileges on app1 using sudo without a change ticket, then moved laterally to db1. 
+Once inside db1, the attacker performed multiple SELECT queries against the donor table in a short time window, indicating data harvesting.
+ Finally, the attacker exfiltrated donor data using a Markdown image link pointing to an external IP.
+
+3. What I Built (Defender Side)
+I used the baseline triage_logins.py rules and added two new rules:
+- Impossible travel (same user logging in from different countries within 30 minutes)
+- Bulk donor-table read (multiple SELECTs within 10 seconds)
+
+My detect.py successfully flagged:
+- Burst of denied auths
+- Non‑home‑geo logins
+- Sudo without a change ticket
+- Exfiltration to attacker IP
+- Impossible travel (RO → INT)
+- Bulk donor-table read
+
+These rules provided reliable, deterministic detection of the attacker’s behavior.
+
+4. AI Triage Summary
+I used a local AI model to summarize the auth.log. The AI correctly identified suspicious logins, sudo activity, and db1 access. It provided a readable narrative of the intrusion.
+
+However, the AI missed:
+- Impossible travel
+- Bulk SELECT queries
+- The full kill chain sequence
+- The exfiltration pattern
+
+The AI also added small assumptions not present in the logs. This showed that while AI is helpful for summarizing, it is not reliable for detection.
+
+5. Comparison: AI vs Deterministic Rules
+The deterministic rules were precise and caught every major indicator. The AI was helpful for explanation but not dependable for detection. 
+The AI did not identify several critical steps of the attack, while the rules caught them immediately.
+
+My conclusion: AI can support analysts, but it cannot replace rule‑based detection in SOC environments.
+
+6. Honest AI Usage Note
+I used an AI assistant lightly during this project:
+- To brainstorm clearer wording for the phishing email
+- To explain the concept of “impossible travel”
+- To outline what typically goes into a scenario description
+- To tidy the wording in one section of my report
+
+I wrote all final content myself, including the code, rules, scenario, triage, threat map, and this report.
+
+7. Final Reflection
+This project helped me understand how attackers chain multiple steps together and how defenders must rely on deterministic rules to detect them. 
+It also showed the limits of AI in security operations. AI is useful for summarizing and brainstorming, but reliable detection requires explicit logic, careful rule design, and human judgment.

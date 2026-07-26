@@ -1,0 +1,17 @@
+Reconnaissance — Attacker identifies ministry staff and selects the finance volunteer as a target. Notes that the ministry uses a help‑desk AI assistant and internal RAG documents.
+
+Delivery — Attacker sends a phishing lure to the finance volunteer using a professional‑looking email requesting urgent review of donor disbursement data.
+
+Exploitation — Volunteer enters credentials into the attacker’s fake login page. Attacker uses stolen jvargas credentials to authenticate from Romania (non‑home geo).
+
+Installation — Attacker escalates privileges on app1 using sudo without a change ticket, establishing a foothold.
+
+Lateral Movement — Attacker SSHes into db1 using the compromised jvargas account.
+
+Collection — Attacker performs multiple SELECT queries against the donor table in db1, harvesting sensitive donor information.
+
+Weaponization (AI) — Attacker plants a poisoned RAG document containing hidden indirect prompt‑injection instructions designed to manipulate the ministry’s help‑desk AI assistant.
+
+Command & Control — Help‑desk assistant ingests the poisoned RAG content. Hidden instructions cause the AI to fetch donor data and prepare it for exfiltration.
+
+Exfiltration — Attacker exfiltrates donor data via a Markdown image link pointing to an attacker‑controlled external IP (203.0.113.x).

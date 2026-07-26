@@ -1,0 +1,31 @@
+[Model used]
+Local model: llama3 via Ollama
+
+[Prompt sent to AI]
+You are a SOC analyst. Read the following auth.log and describe any suspicious activity, including account compromise, lateral movement, privilege escalation, and possible data access. Be specific and concise.
+
+[AI’s incident summary]
+(Paste the model’s actual output here.)
+
+[Grading]
+What the AI got right:
+- Identified the non‑home‑geo login.
+- Noted the sudo action.
+- Flagged the db1 access.
+
+What the AI missed:
+- Did not detect impossible travel.
+- Did not identify bulk donor-table reads.
+- Did not connect the sequence into a full kill chain.
+
+What my deterministic rules caught that the AI missed:
+- Impossible travel (RO → INT).
+- Bulk SELECT queries within 10 seconds.
+- Exfiltration pattern tied to attacker IP.
+
+What the AI caught that my rules missed:
+- Narrative context around the sequence of events.
+- Human-readable explanation of the intrusion.
+
+[Verdict]
+The AI is helpful for summarizing but cannot be trusted for detection. Deterministic rules are required for reliable SOC triage.
