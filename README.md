@@ -19,8 +19,6 @@ This repository contains my work for Project 10 in System Administration and Mai
 **agent-log.txt**: Log of local sandbox model usage.
 
 ## Running the Detector
--
-
 ***python3 defender/detect.py code/auth.log***
 
 ## Summary
