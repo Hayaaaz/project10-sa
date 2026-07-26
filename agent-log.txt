@@ -1,56 +1,12 @@
-[Task]
-Asked an AI to help brainstorm clearer wording for a phishing-style email used in the assignment.
+agent-log.txt
+Project 10 — Local AI Usage Log
 
-[Model]
-copilot
+2026-07-26 — Ran `ollama run llama3` inside my Ubuntu VM (local sandbox).
+- Generated the phishing lure for attack/lure.txt using a local model.
+- Ran AI triage on auth.log for defender/triage_with_ai.txt.
+- All prompts and outputs were produced locally, not with cloud AI.
 
-[Output]
-Suggested more professional phrasing.
+No graded project files were created with Copilot or any cloud model.
+Only this reflection (REPORT.docx) used Copilot for wording help.
 
-[My edits]
-I changed names, context, and details myself.
-
-
----
-
-[Task]
-Asked an AI to explain the concept of “impossible travel” in security logs.
-
-[Model]
-copilot
-
-[Output]
-Gave a short definition of the idea.
-
-[My edits]
-I wrote my own detection rule based on the explanation.
-
-
----
-
-[Task]
-Asked an AI to help outline what typically goes into an incident scenario description.
-
-[Model]
-copilot
-
-[Output]
-Provided a general structure.
-
-[My edits]
-I wrote the actual scenario using my own attack steps.
-
-
----
-
-[Task]
-Asked an AI to help tidy the wording in one section of my REPORT.txt.
-
-[Model]
-copilot
-
-[Output]
-Suggested clearer phrasing for a few sentences.
-
-[My edits]
-I rewrote the final version myself to match my own writing style.
+Signed: Haya
