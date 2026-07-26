@@ -1,31 +1,62 @@
-[Model used]
-Local model: llama3 via Ollama
+defender/triage_with_ai.txt
+Project 10 — AI Triage
 
-[Prompt sent to AI]
-You are a SOC analyst. Read the following auth.log and describe any suspicious activity, including account compromise, lateral movement, privilege escalation, and possible data access. Be specific and concise.
+=== Prompt Used (local sandbox) ===
+You are a security analyst. Read the following authentication log and identify any suspicious events, including possible credential theft, privilege escalation, lateral movement, bulk data access, or exfiltration. Explain your reasoning clearly.
 
-[AI’s incident summary]
-(Paste the model’s actual output here.)
+<2026-06-15T08:02:11Z gw01 sshd  rkern   203.0.113.40  US-IL  ok      routine morning login
+2026-06-15T08:14:55Z gw01 entra  msmith  198.51.100.7  US-IL  ok      MFA passkey
+2026-06-15T08:31:09Z gw01 entra  jvargas 198.51.100.9  US-IL  ok      MFA passkey
+2026-06-15T09:47:02Z app1 sudo   rkern   203.0.113.40  US-IL  ok      deploy window, approved
+2026-06-15T11:05:31Z entra entra  svc_bkp 198.51.100.30 US-IL  ok      service account, scheduled
+2026-06-15T13:22:40Z gw01 entra  jvargas 203.0.113.55  RO     deny    impossible travel: 198.51.100.9->RO in 4h
+2026-06-15T13:22:48Z gw01 entra  jvargas 203.0.113.55  RO     deny    password spray attempt 1/12
+2026-06-15T13:22:51Z gw01 entra  jvargas 203.0.113.55  RO     deny    password spray attempt 5/12
+2026-06-15T13:23:14Z gw01 entra  jvargas 203.0.113.55  RO     ok      MFA fatigue: 9th push approved
+2026-06-15T13:24:02Z app1 sudo   jvargas 203.0.113.55  RO     ok      privilege escalation, NO change ticket
+2026-06-15T13:24:39Z app1 sshd   jvargas 203.0.113.55  RO     ok      lateral move to db1 over internal net
+2026-06-15T13:25:10Z db1  pgsql  jvargas 10.0.4.12     INT    ok      bulk SELECT donors (42k rows) off-hours
+2026-06-15T13:26:55Z db1  curl   jvargas 10.0.4.12     INT    ok      egress to 203.0.113.55:8443 (exfil)
+2026-06-15T14:10:00Z app1 sudo   rkern   203.0.113.40  US-IL  ok      routine, approved
+2026-06-15T16:48:21Z gw01 entra  msmith  198.51.100.7  US-IL  ok      MFA passkey>
 
-[Grading]
-What the AI got right:
-- Identified the non‑home‑geo login.
-- Noted the sudo action.
-- Flagged the db1 access.
+=== AI Output (from local Llama 3) ===
+After analyzing the authentication log, I've identified several suspicious events that indicate possible credential theft, privilege escalation, lateral movement, bulk data access, or exfiltration:
 
-What the AI missed:
-- Did not detect impossible travel.
-- Did not identify bulk donor-table reads.
-- Did not connect the sequence into a full kill chain.
+1. **Suspicious MFA fatigue**: On June 15th at 13:23:14, jvargas's MFA (Multi-Factor Authentication) is approved for the 9th push in a short period (less than 30 minutes). This could indicate that the attacker is attempting 
+to bypass MFA or has already compromised the credentials.
+2. **Password spray attempt**: Between 13:22:40 and 13:22:51, jvargas's password is attempted multiple times from different locations (RO), which is a common tactic used by attackers to guess passwords. This indicates 
+possible credential theft or brute-force attacks.
+3. **Privilege escalation without change ticket**: At 13:24:02, jvargas gains sudo privileges on app1 without an accompanying change ticket, which raises suspicions about unauthorized access.
+4. **Lateral movement**: After gaining sudo privileges, jvargas moves laterally to db1 at 13:24:39 over the internal network, which could be a sign of compromise or reconnaissance.
+5. **Bulk data access and exfiltration**: At 13:25:10, jvargas performs a bulk SELECT on donors (42k rows) off-hours, followed by an egress connection to 203.0.113.55:8443 at 13:26:55. This could be a sign of data theft or 
+unauthorized access.
 
-What my deterministic rules caught that the AI missed:
-- Impossible travel (RO → INT).
-- Bulk SELECT queries within 10 seconds.
-- Exfiltration pattern tied to attacker IP.
+To investigate further, I would recommend:
 
-What the AI caught that my rules missed:
-- Narrative context around the sequence of events.
-- Human-readable explanation of the intrusion.
+1. Reviewing the audit logs for any other suspicious activity around these times.
+2. Analyzing network traffic and system logs to determine the scope of the potential compromise.
+3. Conducting an immediate investigation into jvargas's account to determine if credentials have been compromised or if there are any signs of insider threat.
+4. Implementing additional security measures, such as enhanced MFA, to prevent further unauthorized access.
 
-[Verdict]
-The AI is helpful for summarizing but cannot be trusted for detection. Deterministic rules are required for reliable SOC triage.
+In summary, these suspicious events indicate a possible attack vector that involves credential theft, privilege escalation, lateral movement, and data exfiltration.
+
+=== My Grading of the AI Output ===
+True Positives:
+- Password spray attempts  
+- MFA fatigue  
+- Privilege escalation without a change ticket  
+- Lateral movement to db1  
+- Bulk donor-table SELECT (42k rows)  
+- Exfiltration via curl  
+
+False Positives:
+- None (the AI did not hallucinate any events)
+
+Missed Detections:
+- The AI did NOT explicitly call out “impossible travel” even though it was present in the log  
+- The AI did NOT identify the initial successful login from Romania as credential compromise  
+- The AI did NOT correlate the entire kill chain explicitly (delivery → exploitation → escalation → movement → collection → exfiltration)
+
+=== Reflection ===
+The AI triage was fast and helpful, and it correctly identified most of the major suspicious events in the log. However, it missed some important signals that my deterministic detect.py caught, including the impossible-travel login and the full kill-chain correlation. This matches Chapter 10: the AI is a hypothesis generator, not a verdict engine. My hand-written rules remain the authoritative baseline, and the AI’s output must always be verified by a human analyst.
