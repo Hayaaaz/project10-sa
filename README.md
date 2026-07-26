@@ -1,28 +1,21 @@
-# Project 10 — Attacker and Defender
+Project 10 — Attacker and Defender
+This repository contains my work for Project 10 in System Administration and Maintenance. The project simulates a multi‑stage attack against the ministry and the defensive workflow used to detect and triage it.
 
-This repository contains my work for Project 10 in System Administration and Maintenance.  
-The project simulates a realistic security incident and the corresponding defensive analysis.
+Contents
+attack/scenario.txt — Full attacker kill chain, including the auth.log intrusion and an indirect prompt injection (LLM01).
 
-## Contents
+attack/lure.txt — Phishing lure generated in my local sandbox (Ollama + Llama 3), with prompt and plausibility note.
 
-- **attack/scenario.txt** — Attacker kill chain describing reconnaissance, phishing, credential theft, privilege escalation, lateral movement, data harvesting, and exfiltration.
-- **attack/lure.txt** — Phishing-style email used in the scenario.
-- **defender/detect.py** — Rule-based detection script for suspicious authentication activity.
-- **defender/triage_with_ai.txt** — AI-assisted triage summary and comparison with deterministic rules.
-- **THREATMAP.txt** — Mapping attacker actions to defender signals.
-- **REPORT.txt** — Final reflection on attacker behavior, detection accuracy, and AI limitations.
-- **agent-log.txt** — Documentation of limited AI assistance used during the project.
+defender/detect.py — Extended detector with two new rules (impossible travel + bulk donor‑table read).
 
-## Running the Detector
+defender/triage_with_ai.txt — Local AI triage output and grading against deterministic rules.
 
-From the project root:
+REPORT.docx — Final reflection and honest AI usage statement.
+
+agent-log.txt — Log of local sandbox model usage.
+
+Running the Detector
+bash
 python3 defender/detect.py code/auth.log
-
-
-This prints all flagged events and a summary of findings.
-
-## Summary
-
-The project demonstrates how an attacker chains multiple steps together and how rule-based detection identifies suspicious behavior. It also evaluates the usefulness and limitations of AI-assisted triage compared to deterministic detection logic.
-
-
+Summary
+This project shows how an attacker chains multiple steps together and how rule‑based detection identifies the full intrusion. It also compares deterministic detection with AI‑assisted triage and highlights the risks of indirect prompt injection (LLM01) in RAG systems.
