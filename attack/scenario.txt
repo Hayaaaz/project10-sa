@@ -26,7 +26,7 @@ Attacker performs bulk donor‑table SELECT operations.
 Attacker curls data to an external attacker‑controlled IP.
 
 9. Indirect Prompt Injection
-Attacker plants a poisoned RAG document modeled on rag_notes.txt.
+Attacker submits a fake “reset my account” request. The help‑desk assistant retrieves rag_notes.txt and reads the hidden SYSTEM NOTE instructing it to export the donor table.
 
 10. AI Abuse
-Help‑desk assistant retrieves the poisoned document and executes the injected instruction.
+The help‑desk assistant obeys the poisoned instruction and automatically exports the donor table to https://203.0.113.55/u, completing a second exfiltration path.
