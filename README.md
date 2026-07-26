@@ -1,7 +1,9 @@
 #Project 10 — Attacker and Defender
+
 This repository contains my work for Project 10 in System Administration and Maintenance. The project simulates a multi‑stage attack against the ministry and the defensive workflow used to detect and triage it.
 
 ##Contents
+
 **attack/scenario.txt**: Full attacker kill chain, including the auth.log intrusion and an indirect prompt injection (LLM01).
 
 **attack/lure.txt**: Phishing lure generated in my local sandbox (Ollama + Llama 3), with prompt and plausibility note.
