@@ -14,7 +14,7 @@ This repository contains my work for Project 10 in System Administration and Mai
 
 **defender/triage_with_ai.txt**: Local AI triage output and grading against deterministic rules.
 
-**REPORT.docx**: Final reflection and honest AI usage statement.
+**REPORT.txt**: Final reflection and honest AI usage statement.
 
 **agent-log.txt**: Log of local sandbox model usage.
 
